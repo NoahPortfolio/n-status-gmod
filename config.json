@@ -1,13 +1,12 @@
 {
   "Token": "votre_token",
-  "ServerIP": "ServerIP",
+  "ServerIP": "ip_du_server",
   "ServerPort": 27015,
-  "ChannelID": "ChannelID",
+  "ChannelID": "id_du_salon",
   "MessageID": null,
   "servertitle": "Server Title",
-  "colorembed": "#ff0000",
+  "colorembed": "#2e8bc0",
   "gamemode": "DarkRP",
   "steamconnect": "steam://connect/tonipetport",
-  "image": "https://i.imgur.com/lhLxJWl.png",
-  "setActivity": "Server Titleeeeee"
+  "image": "https://i.imgur.com/lhLxJWl.png"
 }

@@ -10,20 +10,13 @@ const client = new Client({
 client.once('ready', () => {
     console.log(`Le bot est en ligne ${client.user.tag}!`);
     client.user.setStatus('dnd');
-    client.user.setPresence({ 
-        activities: [{ 
-            name: config.setActivity,
-            type: ActivityType.WATCHING
-        }], 
-    });
-
+    
     checkServerStatus();
     setInterval(checkServerStatus, 60000);
 });
 
 async function checkServerStatus() {
     try {
-
         const state = await GameDig.query({
             type: 'garrysmod',
             host: config.ServerIP,
@@ -32,6 +25,13 @@ async function checkServerStatus() {
 
         const playersOnline = state.players.length;
         const maxPlayers = state.maxplayers;
+
+        client.user.setPresence({ 
+            activities: [{ 
+                name: `[${playersOnline}/${maxPlayers}] joueurs   `, 
+                type: ActivityType.WATCHING 
+            }]
+        });
 
         const embed = new EmbedBuilder()
             .setTitle(config.servertitle)
@@ -51,13 +51,11 @@ async function checkServerStatus() {
         const channel = client.channels.cache.get(config.ChannelID);
         if (channel) {
             if (!config.MessageID) {
-
                 const sentMessage = await channel.send({ embeds: [embed] });
                 config.MessageID = sentMessage.id;
                 fs.writeFileSync('./config.json', JSON.stringify(config, null, 2), 'utf-8');
                 console.log('Statut du serveur envoyé et MessageID enregistré.');
             } else {
-
                 const message = await channel.messages.fetch(config.MessageID);
                 if (message) {
                     await message.edit({ embeds: [embed] });
@@ -72,6 +70,13 @@ async function checkServerStatus() {
         }
     } catch (error) {
         console.error('Erreur lors de la récupération du statut du serveur:', error);
+
+        client.user.setPresence({ 
+            activities: [{ 
+                name: 'Serveur hors ligne', 
+                type: ActivityType.WATCHING 
+            }]
+        });
 
         const offlineEmbed = new EmbedBuilder()
             .setTitle('Statut du serveur Garry\'s Mod')
