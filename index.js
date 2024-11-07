@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, EmbedBuilder, ActivityType } = require('discord.js');
 const { GameDig } = require('gamedig');
 const fs = require('fs');
-const config = require('./c.json');
+const config = require('./config.json');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
