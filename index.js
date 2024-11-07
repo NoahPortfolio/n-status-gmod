@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, EmbedBuilder, ActivityType } = require('discord.js');
 const { GameDig } = require('gamedig');
 const fs = require('fs');
-const config = require('./config.json');
+const config = require('./c.json');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
@@ -43,7 +43,7 @@ async function checkServerStatus() {
                 { name: 'Gamemode', value: config.gamemode, inline: true },
                 { name: 'Carte', value: state.map, inline: true },
                 { name: 'Ping', value: `${state.ping}ms`, inline: false },
-                { name: "Connexion directe", value: config.steamconnect, inline: false },
+                { name: "Connexion directe", value: `steam://connect/${config.ServerIP}:${config.ServerPort}`, inline: false },
             )
             .setColor(config.colorembed)
             .setTimestamp();
