@@ -18,8 +18,7 @@ Avant de commencer, assurez-vous d'avoir :
 
 ## 📥 Installation en Local
 
-npm install discord.js
-npm install gamedig 
+npm i
 
 ## 📥 Installation sur Pterodactyl
 
