@@ -18,8 +18,7 @@ Avant de commencer, assurez-vous d'avoir :
 
 ## 📥 Installation en Local
 
-npm install discord.js
-npm install gamedig 
+npm i
 
 ## 📥 Installation sur Pterodactyl
 
@@ -30,12 +29,3 @@ Allez dans les paramètres du serveur sur le panel Pterodactyl.
 Rendez-vous dans la section Additional Node Packages.
 
 Ajoutez les packages suivants : discord.js @discordjs/rest gamedig
-
-Code : 
-config.json
-![image](https://github.com/user-attachments/assets/6b9be66d-7fe2-4240-8d6e-8e84186e5a60)
-index.js
-
-![code](https://github.com/user-attachments/assets/53bb87c3-53a2-4fee-aa4c-53b9a0e3ac14)
-
-
