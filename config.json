@@ -3,7 +3,7 @@
   "ServerIP": "config",
   "ServerPort": 27015,
   "ChannelID": "config",
-  "MessageID": "config",
+  "MessageID": null,
   "servertitle": "config",
   "colorembed": "#0080ff",
   "gamemode": "DarkRP",
