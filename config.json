@@ -1,13 +1,13 @@
 {
-  "Token": "votre_token",
-  "ServerIP": "ServerIP",
+  "Token": "config",
+  "ServerIP": "config",
   "ServerPort": 27015,
-  "ChannelID": "ChannelID",
-  "MessageID": null,
-  "servertitle": "Server Title",
-  "colorembed": "#ff0000",
+  "ChannelID": "config",
+  "MessageID": "config",
+  "servertitle": "config",
+  "colorembed": "#0080ff",
   "gamemode": "DarkRP",
-  "image": "https://i.imgur.com/lhLxJWl.png",
-  "setActivity": "Server Titleeeeee",
-  "showPlayers": true
+  "image": "https://i.imgur.com/o37gXYD.png",
+  "setActivity": "config",
+  "showPlayers": false
 }
