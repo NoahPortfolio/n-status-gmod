@@ -1,13 +1,14 @@
 {
-  "Token": "config",
-  "ServerIP": "config",
+  "Token": "votre_token",
+  "ServerIP": "",
   "ServerPort": 27015,
-  "ChannelID": "config",
+  "ChannelID": "",
   "MessageID": null,
-  "servertitle": "config",
-  "colorembed": "#0080ff",
+  "servertitle": "Preview",
+  "colorembed": "#424549",
   "gamemode": "DarkRP",
-  "image": "https://i.imgur.com/o37gXYD.png",
+  "image": "https://i.imgur.com/qOX9yFT.png",
   "setActivity": "config",
-  "showPlayers": false
+  "connectButtonURL": "http://", 
+  "showPing": true
 }

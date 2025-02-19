@@ -28,10 +28,11 @@ async function checkServerStatus(interaction) {
 
         const playersOnline = state.players.length;
         const maxPlayers = state.maxplayers;
+        const ping = state.ping;
 
         client.user.setPresence({
             activities: [{
-                name: `${playersOnline}/${maxPlayers}`,
+                name: config.showPing ? `${playersOnline}/${maxPlayers} | Ping: ${ping}ms` : `${playersOnline}/${maxPlayers}`,
                 type: ActivityType.WATCHING,
             }],
             status: 'dnd',
@@ -43,25 +44,40 @@ async function checkServerStatus(interaction) {
             .addFields(
                 { name: 'IP', value: `\`${config.ServerIP}:${config.ServerPort}\``, inline: true },
                 { name: 'Statut', value: '✅ En ligne', inline: true },
-                { name: 'Joueurs connectés', value: `${playersOnline}/${maxPlayers}`, inline: false },
-                { name: 'Gamemode', value: config.gamemode, inline: true },
-                { name: 'Carte', value: state.map, inline: true },
-                { name: "Connexion directe", value: `steam://connect/${config.ServerIP}:${config.ServerPort}`, inline: false },
-            )
-            .setColor(config.colorembed)
-            .setTimestamp();
+                { name: 'Joueurs connectés', value: `\`${playersOnline}/${maxPlayers}\``, inline: false },
+            );
+        
+        if (config.showPing) {
+            embed.addFields({ name: 'PING', value: `\`${ping}ms\``, inline: true });
+        }
+
+        embed.addFields(
+            { name: 'Gamemode', value: config.gamemode, inline: true },
+            { name: 'Carte', value: state.map, inline: true }
+        )
+        .setColor(config.colorembed)
+        .setTimestamp();
+
+        if (config.connectButtonURL) {
+            const connectButton = new ButtonBuilder()
+                .setLabel('Se connecter')
+                .setStyle(ButtonStyle.Link)
+                .setURL(config.connectButtonURL);
+            
+            var row = new ActionRowBuilder().addComponents(connectButton);
+        }
 
         const channel = client.channels.cache.get(config.ChannelID);
         if (channel) {
             if (!config.MessageID) {
-                const sentMessage = await channel.send({ embeds: [embed] });
+                const sentMessage = await channel.send({ embeds: [embed], components: config.connectButtonURL ? [row] : [] });
                 config.MessageID = sentMessage.id;
                 fs.writeFileSync('./config.json', JSON.stringify(config, null, 2), 'utf-8');
                 console.log('Statut du serveur envoyé et MessageID enregistré.');
             } else {
                 const message = await channel.messages.fetch(config.MessageID);
                 if (message) {
-                    await message.edit({ embeds: [embed] });
+                    await message.edit({ embeds: [embed], components: config.connectButtonURL ? [row] : [] });
                     if (interaction) await interaction.reply({ content: 'Statut actualisé !', ephemeral: true });
                     console.log('[N-Status - Statut du serveur mis à jour].');
                 } else {
