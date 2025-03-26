@@ -22,10 +22,10 @@ npm i
 
 ## 📥 Installation sur Pterodactyl
 
-Pour installer le bot sur Pterodactyl :
+- Pour installer le bot sur Pterodactyl :
 
-Allez dans les paramètres du serveur sur le panel Pterodactyl.
+- Allez dans les paramètres du serveur sur le panel Pterodactyl.
 
-Rendez-vous dans la section Additional Node Packages.
+- Rendez-vous dans la section Additional Node Packages.
 
-Ajoutez les packages suivants : discord.js @discordjs/rest gamedig
+- Ajoutez les packages suivants : discord.js @discordjs/rest gamedig

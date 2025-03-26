@@ -11,7 +11,7 @@ client.once('ready', () => {
     console.log(`Le bot est en ligne ${client.user.tag}!`);
     client.user.setStatus('online');
     client.user.setPresence({
-        activities: [{ name: 'Chargement du serveur...', type: ActivityType.WATCHING }],
+        activities: [{ name: 'Recherche du serveur...', type: ActivityType.WATCHING }],
     });
 
     checkServerStatus();
