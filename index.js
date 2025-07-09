@@ -24,11 +24,12 @@ async function checkServerStatus(interaction) {
             type: 'garrysmod',
             host: config.ServerIP,
             port: config.ServerPort,
-        });        
+        });
 
-        const playersOnline = state.players.length;
-        const maxPlayers = state.maxplayers;
-        const ping = state.ping;
+        const playersList = Array.isArray(state.players) ? state.players : [];
+        const playersOnline = playersList.length;
+        const maxPlayers = state.maxplayers || 0;
+        const ping = state.ping || 0;
 
         client.user.setPresence({
             activities: [{
@@ -46,24 +47,38 @@ async function checkServerStatus(interaction) {
                 { name: 'Statut', value: '✅ En ligne', inline: true },
                 { name: 'Joueurs connectés', value: `\`${playersOnline}/${maxPlayers}\``, inline: false },
             );
-        
+
         if (config.showPing) {
             embed.addFields({ name: 'PING', value: `\`${ping}ms\``, inline: true });
         }
 
         embed.addFields(
             { name: 'Gamemode', value: config.gamemode, inline: true },
-            { name: 'Carte', value: state.map, inline: true }
-        )
-        .setColor(config.colorembed)
-        .setTimestamp();
+            { name: 'Carte', value: state.map || 'Inconnue', inline: true }
+        );
+
+        if (playersList.length > 0) {
+            const playerNames = playersList
+                .map(player => player.name || 'Inconnu')
+                .join('\n');
+
+            embed.addFields({
+                name: '👥 Liste des joueurs',
+                value: `\`\`\`\n${playerNames}\n\`\`\``,
+                inline: false,
+            });
+        } else {
+            embed.addFields({ name: '👥 Liste des joueurs', value: 'Aucun joueur connecté.', inline: false });
+        }
+
+        embed.setColor(config.colorembed).setTimestamp();
 
         if (config.connectButtonURL) {
             const connectButton = new ButtonBuilder()
                 .setLabel('Se connecter')
                 .setStyle(ButtonStyle.Link)
                 .setURL(config.connectButtonURL);
-            
+
             var row = new ActionRowBuilder().addComponents(connectButton);
         }
 
@@ -75,7 +90,7 @@ async function checkServerStatus(interaction) {
                 fs.writeFileSync('./config.json', JSON.stringify(config, null, 2), 'utf-8');
                 console.log('Statut du serveur envoyé et MessageID enregistré.');
             } else {
-                const message = await channel.messages.fetch(config.MessageID);
+                const message = await channel.messages.fetch(config.MessageID).catch(() => null);
                 if (message) {
                     await message.edit({ embeds: [embed], components: config.connectButtonURL ? [row] : [] });
                     if (interaction) await interaction.reply({ content: 'Statut actualisé !', ephemeral: true });
@@ -83,6 +98,7 @@ async function checkServerStatus(interaction) {
                 } else {
                     console.error('Message non trouvé, réinitialisation du MessageID.');
                     config.MessageID = null;
+                    fs.writeFileSync('./config.json', JSON.stringify(config, null, 2), 'utf-8');
                 }
             }
         } else {
